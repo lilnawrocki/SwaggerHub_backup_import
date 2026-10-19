@@ -17,7 +17,7 @@ import java.util.Scanner;
 public class Main {
 
     public static String logfile = ("default_log_" + LocalDateTime.now() + ".txt").replace(":", "-");
-
+    public static String systemSeparator = System.getProperty("file.separator");
     public static void main(String[] args) {
 
         String response;
@@ -210,7 +210,7 @@ public class Main {
                 String path = String.format("SwaggerHub-Downloads\\%s\\%s\\",
                         organisationName,
                         substrings[4]);
-
+                path = path.replace("\\", systemSeparator);
                 String filename = String.format("%s-version_%s.yaml",
                         documentName,
                         version);
@@ -312,6 +312,7 @@ public class Main {
                 HttpResponse<String> response;
                 String path = String.format("SwaggerHub-Downloads\\%s\\integrations\\",
                         organisationName);
+                path = path.replace("\\", systemSeparator);
                 String filename = String.format("%s-version_%s.json",
                         documentName,
                         version);
@@ -385,6 +386,7 @@ public class Main {
                 JsonElement projectElement = gson.toJsonTree(projectsObject);
                 String path = String.format("SwaggerHub-Downloads\\%s\\projects\\",
                             organizationNames.get(i));
+                path = path.replace("\\", System.getProperty("file.separator"));
                 String filename = project.projects[j].name + ".json";
                 SaveDocumentToFile(gson.toJson(projectElement), path, filename);
                 //if more projects than 100 which is the maximum -> increment page value and reset the loop
@@ -423,6 +425,7 @@ public class Main {
             return;
         }
         String backupPath = currentPath + "\\SwaggerHub-Downloads";
+        backupPath = backupPath.replace("\\", systemSeparator);
         File backupPathFile = new File(backupPath);
 
         String[] backupDirectories = backupPathFile.list();
@@ -446,6 +449,7 @@ public class Main {
 
     public static void CreateDocument(String host, String key, String backupPath, HttpClient httpClient, String organization, String type) {
         String tempPath = String.format("%s\\%s", backupPath, organization);
+        tempPath = tempPath.replace("\\", systemSeparator);
         File tempPathFile = new File(tempPath);
         String[] documentTypeDirectories = tempPathFile.list();
 
@@ -456,6 +460,7 @@ public class Main {
         if (Arrays.toString(documentTypeDirectories).contains(type)) {
 
             tempPath = String.format("%s\\%s\\%s", backupPath, organization, type);
+            tempPath = tempPath.replace("\\", systemSeparator);
             File documentDirectory = new File(tempPath);
             File[] documentFiles = documentDirectory.listFiles();
             List<String> documentFileNames = new ArrayList<String>();
@@ -525,6 +530,7 @@ public class Main {
             return;
         }
         String backupPath = currentPath + "\\SwaggerHub-Downloads";
+        backupPath = backupPath.replace("\\", systemSeparator);
         File backupPathFile = new File(backupPath);
 
         String[] backupDirectories = backupPathFile.list();
@@ -540,6 +546,7 @@ public class Main {
             String tempPath = String.format("%s\\%s\\integrations",
                     backupPath,
                     s);
+            tempPath = tempPath.replace("\\", systemSeparator);
             File[] integrationFiles = new File(tempPath).listFiles();
 
             if (integrationFiles == null) return;
@@ -629,6 +636,7 @@ public class Main {
             return;
         }
         String backupPath = currentPath + "\\SwaggerHub-Downloads";
+        backupPath = backupPath.replace("\\", systemSeparator);
         File backupPathFile = new File(backupPath);
 
         String[] backupDirectories = backupPathFile.list();
@@ -645,6 +653,7 @@ public class Main {
             String tempPath = String.format("%s\\%s\\projects",
                     backupPath,
                     s);
+            tempPath = tempPath.replace("\\", systemSeparator);
             File[] projectFiles = new File(tempPath).listFiles();
 
             if (projectFiles == null) return;
@@ -727,16 +736,16 @@ public class Main {
         return apiResponse;
     }
 
-    public static Orgs GetOrgs(String keyA, String hostA, int page)
+    public static Orgs GetOrgs(String key, String host, int page)
     {
         String getOrganizationsURL = String.format("%s/api/user-management/v1/orgs?sortBy=NAME&order=ASC&page=%d&pageSize=1",
-                hostA, page);
+                host, page);
 
         HttpRequest httpGETRequest = HttpRequest.newBuilder()
                 .uri(URI.create(getOrganizationsURL))
                 .headers(
                         "Accept", "application/json",
-                        "Authorization", keyA
+                        "Authorization", key
                 )
                 .GET()
                 .build();
@@ -758,16 +767,16 @@ public class Main {
         return apiResponse;
     }
 
-    public static Projects GetProjects(String keyA, String hostA, String organizationName, int page)
+    public static Projects GetProjects(String key, String host, String organizationName, int page)
     {
         String getProjectsURL = String.format("%s/v1/projects/%s?nameOnly=false&page=%d&limit=100&order=ASC",
-                hostA, organizationName, page);
+                host, organizationName, page);
 
         HttpRequest httpGETRequest = HttpRequest.newBuilder()
                 .uri(URI.create(getProjectsURL))
                 .headers(
                         "Accept", "application/json",
-                        "Authorization", keyA
+                        "Authorization", key
                 )
                 .GET()
                 .build();
