@@ -16,7 +16,7 @@ This application contains various simplifications in code which may result in un
 - If you would like to reuse the application to export & import from and to another instance, you need to make sure that the previous downloads are zipped and saved in a safe location, and the directory `SwaggerHub-Downloads` does not exist, otherwise, the `export` run will create additional organisation folders and `import` will try send all this data to the specified host. This happens because the application is simply scanning all folders inside `SwaggerHub-Downloads`, it does not know which organisations should be imported and which should not be.
 - Document names should at best not contain `-version_` string as this is used to properly split the file name into document name and version.
 - There is a known limitation of the GET integrations endpoint which returns incomplete JSON for some integrations, such as webhook or GitHub sync. This may result in failures on importing integrations and cannot be fixed with code in this application. See import output below.
-- It was observed on SwaggerHub 2.15.2 that if the documents already exist on the target instance during the import operation, the POST request will return bad status code with empty response body. The application will write such failures to the logs.
+- It was observed on SwaggerHub 2.15.2 that if the documents already exist on the target instance during the import operation, the POST request may return bad status code with empty response body. The application will write such failures to the logs.
 
 ### Sample output
 Export run:
