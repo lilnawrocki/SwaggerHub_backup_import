@@ -127,6 +127,7 @@ public class Main {
 
         } catch (IOException | InterruptedException | IllegalArgumentException exception) {
             SaveLog(exception.getMessage());
+            return false;
         }
 
         httpClient.close();
