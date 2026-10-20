@@ -74,18 +74,15 @@ public class Main {
             {
                 return false;
             }
-        }else
-        {
-            if (host.contains("https://"))
-            {
-                if (host.indexOf("https://") != 0)
-                {
-                    return false;
-                }
-            }
-            return false;
         }
-        if (host.equals("http://"))
+        if (host.contains("https://"))
+        {
+            if (host.indexOf("https://") != 0)
+            {
+                return false;
+            }
+        }
+        if (host.equals("http://") || host.equals("https://"))
         {
             return false;
         }
