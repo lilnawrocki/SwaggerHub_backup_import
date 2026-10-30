@@ -1,5 +1,5 @@
 ## Description
-Java console application for downloading and importing data from and to SwaggerHub on-premise instance. This version of the application is a variant of [`SwaggerHub_data_migration`](https://github.com/lilnawrocki/SwaggerHub_data_migration) that allows downloading and importing as separate steps and reusing the same host. The application was tested on versions 2.10.1 and 2.15.2.
+Java console application for downloading and importing data from and to SwaggerHub on-premise instance. The application was tested on versions 2.10.1 and 2.15.2.
 
 ### Instructions
 The application will ask for admin API key, host with protocol, and ask whether you would like to import or export data. Exported data will be stored in `SwaggerHub-Downloads` directory. Import option will be using this directory to upload data to the specified host. For each run, a log file named `export_log_DATE` or `import_log_DATE` will be created in the project directory.
